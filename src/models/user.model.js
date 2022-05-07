@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model, Types } = require("mongoose")
 const bcrypt = require("bcrypt")
 
 class User {
@@ -7,6 +7,7 @@ class User {
       email: String,
       firstname: String,
       lastname: String,
+      phone: String,
       password: String,
     })
 
@@ -25,7 +26,8 @@ class User {
       id: user._id,
       firstname: user.firstname,
       lastname: user.lastname,
-      email: user.email
+      email: user.email,
+      phone: user.phone
     }
   }
 
@@ -45,12 +47,17 @@ class User {
   }
 
   async delete(id) {
-    return await this.model.deleteOne({ _id: id })
+    return await this.model.deleteOne({ _id: Types.ObjectId(id) })
   }
 
   async getById(id) {
-    console.log("get by id")
-    return await this.model.findById(id)
+    const user =  await this.model.findById(Types.ObjectId(id))
+    return {
+      id: user._id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email
+    }
   }
 
   async isPasswordValid(email, pwd) {
