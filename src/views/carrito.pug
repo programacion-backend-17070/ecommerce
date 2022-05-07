@@ -1,0 +1,23 @@
+extends layouts/page.pug
+block title
+  h2 Videojuegos en el carrito
+block pageContent
+  .uk-flex.uk-flex-between.align-cart
+    div
+      h5.uk-margin-remove total $$$
+    div
+      button.uk-margin-remove.uk-button.uk-button-secondary.uk-button-small.uk-margin-top Continuar
+
+  div(class='uk-margin-top uk-child-width-1-4@m' uk-grid='')
+    div
+      .uk-card.uk-card-default
+        .uk-card-body
+          h3.uk-card-title Ghost of Tsushima
+          h5 MXN $1200
+          span.uk-badge PS4
+          br
+          
+          button.uk-button.uk-button-secondary.uk-button-small.uk-margin-top Eliminar
+
+      
+      
