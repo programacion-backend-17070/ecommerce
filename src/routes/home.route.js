@@ -4,8 +4,6 @@ const productModel = require('../models/product.model')
 const cartModel = require('../models/cart.model')
 const pedidoModel = require('../models/pedido.model')
 
-const mailSender = require('../notifications/mail')
-
 
 const router = Router()
 
@@ -39,21 +37,11 @@ router.get("/pedido", auth, async (req, res) => {
   const products = await Promise.all(cart.products.map(pId => productModel.getById(pId)))
   const total = products.reduce((tot, p) => tot + p.price, 0)
 
-  const template = `
-    <h1 style="color: blue;">Tu pedido esta siendo procesado</h1>
-    <p>Aqui tus productos: </p>
-    <ul>
-      ${products.map(p => `<li>${p.name}</li>`).join('')}
-    </ul>
-
-    <p>Pagaste: MXN $ ${total}</p>
-    `
   try {
     await pedidoModel.save({
       userId: id,
       total
     })
-    await mailSender.send(email, template);
     await cartModel.emptyCartByUser(id)
     context.sent = true
   } catch (e) {
