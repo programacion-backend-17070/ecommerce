@@ -32,3 +32,11 @@ async function removeFromCart(cartId, productId) {
   const el = document.getElementById(productId)
   el.parentElement.removeChild(el)
 }
+
+async function sendOrder(pedidoId) {
+  const res = await fetch(`/api/sms/${pedidoId}`, { method: 'POST' })
+
+  if (res.status != 200) {
+    return
+  }
+}
