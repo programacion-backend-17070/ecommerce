@@ -16,11 +16,11 @@ block pageContent
     tbody
       if pedidos.length
         each p in pedidos
-          tr
+          tr(id=`${p.id}`)
             td #{p.userId}
             td #{p.created}
             td $#{p.total}
-            td #{p.enviado}
+            td#enviado #{p.enviado}
             td
               button.uk-margin-remove.uk-button.uk-button-secondary.uk-button-small.uk-margin-top(onclick=`sendOrder('${p.id}')`) Enviar
       else 

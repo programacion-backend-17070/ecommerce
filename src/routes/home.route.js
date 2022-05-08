@@ -60,10 +60,6 @@ router.get("/pedido", auth, async (req, res) => {
     console.log(e)
   }
 
-  // TODO
-  // hacer el template
-  // vaciar carrito y crear pedido y mostrar en tabla
-
   res.render("pedido", context)
 })
 

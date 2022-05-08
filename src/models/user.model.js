@@ -43,7 +43,8 @@ class User {
       id: user._id,
       firstname: user.firstname,
       lastname: user.lastname,
-      email: user.email
+      email: user.email,
+      phone: user.phone
     }
   }
 
@@ -57,7 +58,8 @@ class User {
       id: user._id,
       firstname: user.firstname,
       lastname: user.lastname,
-      email: user.email
+      email: user.email,
+      phone: user.phone
     }
   }
 
