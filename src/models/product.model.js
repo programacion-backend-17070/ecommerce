@@ -8,6 +8,7 @@ class Product {
       platform: String,
       price: Number,
       description: String,
+      image: String
     })
 
     this.model = model("product", schema)

@@ -15,7 +15,6 @@ router.get("/users", auth, (req, res) => res.render("admin/table", { title: "Usu
 
 router.get("/products", auth, async (req, res) => {
   const products = await productModel.getAll()
-  console.log(products)
   res.render("admin/table", { title: "Productos", add: "/admin/add/product", products } )
 })
 

@@ -8,7 +8,7 @@ class User {
       firstname: String,
       lastname: String,
       phone: String,
-      password: String,
+      password: String
     })
 
     this.model = model("user", schema)
@@ -22,6 +22,7 @@ class User {
   async save(obj) {
     obj.password = await bcrypt.hash(obj.password, 10)
     const user = await this.model.create(obj)
+    
     return {
       id: user._id,
       firstname: user.firstname,

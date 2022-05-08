@@ -4,20 +4,26 @@ block title
 block pageContent
   .uk-flex.uk-flex-between.align-cart
     div
-      h5.uk-margin-remove total $$$
+      h5.uk-margin-remove Total: MXN $#{total}
     div
       button.uk-margin-remove.uk-button.uk-button-secondary.uk-button-small.uk-margin-top Continuar
 
-  div(class='uk-margin-top uk-child-width-1-4@m' uk-grid='')
-    div
-      .uk-card.uk-card-default
-        .uk-card-body
-          h3.uk-card-title Ghost of Tsushima
-          h5 MXN $1200
-          span.uk-badge PS4
-          br
-          
-          button.uk-button.uk-button-secondary.uk-button-small.uk-margin-top Eliminar
-
+  
+  div#productsInCart(class='uk-margin-top uk-child-width-1-4@m' uk-grid='')
+    if products.length
+      each p in products
+        div(id = `${p.id}`)
+          .uk-card.uk-card-default
+            .uk-card-body
+              h3.uk-card-title #{p.name}
+              h5 MXN $#{p.price}
+              span.uk-badge #{p.platform}
+              br
+              button.uk-button.uk-button-secondary.uk-button-small.uk-margin-top(onclick=`removeFromCart('${cartId}', '${p.id}')`) Eliminar
+    else 
+        p Tu carrito esta vacio
+block scripts
+  script(src="/static/js/general.js")
+  script(src="/static/js/home.js")
       
       

@@ -1,23 +1,19 @@
 const LocalStrategy = require("passport-local").Strategy
 const userModel = require("../models/user.model")
+const cartModel = require("../models/cart.model")
 
 module.exports = (passport) => {
   const authenticateUser = async (email, password, done) => {
-    console.log(email, password)
     try {
       if (!await userModel.existsByEmail(email)) {
-        console.log("no email")
         return done(null, false , { message: 'user does not exist!' })
       }
 
       if (!await userModel.isPasswordValid(email, password)) {
-        console.log("incorrect pwd")
         return done(null, false , { message: 'incorrect password!' })
       }
 
-      console.log("user")
       const user = await userModel.getByEmail(email)
-
 
       done(null, user)
     } catch (err) {
@@ -38,6 +34,8 @@ module.exports = (passport) => {
         lastname: lname,
         password: password
       })
+
+      await cartModel.save({ userId: user._id })
   
       console.log(user)
   
@@ -54,25 +52,5 @@ module.exports = (passport) => {
 
   // serializar usuario
   passport.serializeUser((user, done) => done(null, user.id))
-  passport.deserializeUser(async (id, done) => {
-    console.log("id")
-    return done(null, await userModel.getById(id))
-  })
-
-
-  //Serializar y deserializar
-
-  // passport no guarda el usuario, guarda un identificador a el
-  // por eso lo deserializamos
-  // 1 => serializacion
-  // 1 => obj deserializacion
-
-  // passport.serializeUser((user, done) => {
-  //   done(null, user.id)
-  // })
-
-  // passport.deserializeUser((id, done) => {
-  //   // buscar el usuario en la DB
-  //   done(null, {})
-  // })
+  passport.deserializeUser(async (id, done) => done(null, await userModel.getById(id)))
 }
