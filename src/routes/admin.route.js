@@ -1,6 +1,7 @@
 const Router = require("express").Router
 const auth = require("../middlewares/auth.middleware")
 const productModel = require('../models/product.model')
+const pedidoModel = require('../models/pedido.model')
 
 const router = Router()
 
@@ -18,7 +19,12 @@ router.get("/products", auth, async (req, res) => {
   res.render("admin/table", { title: "Productos", add: "/admin/add/product", products } )
 })
 
-router.get("/pedidos", auth, (req, res) => res.render("admin/table", { title: "Pedidos"} ))
+router.get("/pedidos", auth, async (req, res) => {
+
+  const pedidos = await pedidoModel.getAll()
+  console.log(pedidos)
+  res.render("admin/pedidosTable", { title: "Pedidos", pedidos } )
+})
 router.get("/add/product", auth, (req, res) => res.render("admin/productAdd"))
 router.post("/add/product", auth, async (req, res) => {
   const { body } = req

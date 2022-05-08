@@ -80,6 +80,14 @@ class Product {
 
     await cart.save()
   }
+
+  async emptyCartByUser(userId) {
+    const cart =  await this.model.findOne({ userId })
+
+    cart.products = []
+
+    await cart.save()
+  }
 }
 
 module.exports = new Product()

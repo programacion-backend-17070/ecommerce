@@ -2,6 +2,9 @@ const Router = require("express").Router
 const auth = require("../middlewares/auth.middleware")
 const productModel = require('../models/product.model')
 const cartModel = require('../models/cart.model')
+const pedidoModel = require('../models/pedido.model')
+
+const mailSender = require('../notifications/mail')
 
 
 const router = Router()
@@ -27,11 +30,41 @@ router.get("/carrito", auth, async (req, res) => {
   res.render("carrito", { cartId: cart.id, products, total })
 })
 
-router.get("/pedido", auth, (req, res) => {
+router.get("/pedido", auth, async (req, res) => {
 
-  const { firstname, lastname } = req.user
+  const { id, email } = req.user
+  const context = { sent: false }
 
-  res.render("pedido")
+  const cart = await cartModel.getByUser(id)
+  const products = await Promise.all(cart.products.map(pId => productModel.getById(pId)))
+  const total = products.reduce((tot, p) => tot + p.price, 0)
+
+  const template = `
+    <h1 style="color: blue;">Tu pedido esta siendo procesado</h1>
+    <p>Aqui tus productos: </p>
+    <ul>
+      ${products.map(p => `<li>${p.name}</li>`).join('')}
+    </ul>
+
+    <p>Pagaste: MXN $ ${total}</p>
+    `
+  try {
+    await pedidoModel.save({
+      userId: id,
+      total
+    })
+    await mailSender.send(email, template);
+    await cartModel.emptyCartByUser(id)
+    context.sent = true
+  } catch (e) {
+    console.log(e)
+  }
+
+  // TODO
+  // hacer el template
+  // vaciar carrito y crear pedido y mostrar en tabla
+
+  res.render("pedido", context)
 })
 
 module.exports = router
