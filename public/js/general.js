@@ -39,4 +39,9 @@ async function sendOrder(pedidoId) {
   if (res.status != 200) {
     return
   }
+
+  const row = document.getElementById(pedidoId)
+  const cell = row.children.item(3)
+
+  cell.innerHTML = 'Si'
 }

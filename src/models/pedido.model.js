@@ -24,7 +24,7 @@ class Pedido {
       userId: pedido.userId,
       total: pedido.total,
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
-      enviado: pedido.enviado
+      enviado: pedido.enviado ? 'Si' : 'No'
     }))
   }
 
@@ -35,7 +35,7 @@ class Pedido {
       userId: pedido.userId,
       total: pedido.total,
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
-      enviado: pedido.enviado
+      enviado: pedido.enviado ? 'Si' : 'No'
     }
   }
 
@@ -50,7 +50,7 @@ class Pedido {
       userId: pedido.userId,
       total: pedido.total,
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
-      enviado: pedido.enviado
+      enviado: pedido.enviado ? 'Si' : 'No'
     }
   }
 
@@ -66,8 +66,16 @@ class Pedido {
       userId: pedido.userId,
       total: pedido.total,
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
-      enviado: pedido.enviado
+      enviado: pedido.enviado ? 'Si' : 'No'
     }
+  }
+
+  async updateEnviarPedido(id, enviado) {
+    const pedido =  await this.model.findById(id)
+
+    pedido.enviado = enviado
+
+    await pedido.save()
   }
 }
 

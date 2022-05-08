@@ -22,7 +22,6 @@ router.get("/products", auth, async (req, res) => {
 router.get("/pedidos", auth, async (req, res) => {
 
   const pedidos = await pedidoModel.getAll()
-  console.log(pedidos)
   res.render("admin/pedidosTable", { title: "Pedidos", pedidos } )
 })
 router.get("/add/product", auth, (req, res) => res.render("admin/productAdd"))
