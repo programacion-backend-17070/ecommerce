@@ -18,6 +18,7 @@ module.exports = (async () => {
   const apiProductsRouter = require("./routes/api.products.route")
   const apiCartRouter = require("./routes/api.cart.route")
   const apiUserRouter = require("./routes/api.user.route")
+  const smsRouter = require("./routes/api.sms.route")
 
   const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS } = mongoConfig
   const app = express()
@@ -61,6 +62,7 @@ module.exports = (async () => {
     app.use("/api/products", apiProductsRouter)
     app.use("/api/cart", apiCartRouter)
     app.use("/api/user", apiUserRouter)
+    app.use("/api/sms", smsRouter)
 
     server.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`))
     return server
