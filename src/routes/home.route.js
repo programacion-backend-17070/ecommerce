@@ -4,6 +4,8 @@ const productModel = require('../models/product.model')
 const cartModel = require('../models/cart.model')
 const pedidoModel = require('../models/pedido.model')
 
+const mailSender = require('../notifications/mail')
+
 
 const router = Router()
 
@@ -35,6 +37,8 @@ router.get("/pedido", auth, async (req, res) => {
 
   const cart = await cartModel.getByUser(id)
   const products = await Promise.all(cart.products.map(pId => productModel.getById(pId)))
+
+  
   const total = products.reduce((tot, p) => tot + p.price, 0)
 
   try {
@@ -43,6 +47,21 @@ router.get("/pedido", auth, async (req, res) => {
       total
     })
     await cartModel.emptyCartByUser(id)
+
+    /// Integracion con el mail
+    //[ { name: Conker, price: 4000} ]
+    // [<li>Conker</li>, <li>Conker</li>, <li>Conker</li>]
+    const elementosDeProducto = products.map(p => `<li>${p.name}</li>`)
+    const template = `
+      <h1 style="color: blue;"> Tu pedido esta siendo procesado </h1>
+      <p>Aqui tus productos: </p>
+      <ul>
+        ${elementosDeProducto.join(" ")}
+      </ul>
+
+      <img src="pedido.png />
+    `
+    mailSender.send(template, email)
     context.sent = true
   } catch (e) {
     console.log(e)
