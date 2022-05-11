@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const pedidoModel = require('../models/pedido.model')
-const smsSender = require('../notifications/twilio')
+const twilioSender = require('../notifications/twilio')
 
 const router = new Router();
 
@@ -14,9 +14,7 @@ router.post('/:pedidoId', async (req, res) => {
   try {
     await pedidoModel.updateEnviarPedido(pedidoId, true)
 
-    // TWILIO VA AQUI
-    // "+525540774320"
-    // smsSender.send("+525540774320")
+    twilioSender.sendWhatsapp()
     res.sendStatus(202)
   } catch (e) {
     res.status(500).send(e)

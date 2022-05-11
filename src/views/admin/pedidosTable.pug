@@ -22,7 +22,7 @@ block pageContent
             td $#{p.total}
             td#enviado #{p.enviado}
             td
-              button.uk-margin-remove.uk-button.uk-button-secondary.uk-button-small.uk-margin-top(onclick=`sendOrder('${p.id}')`, disabled=`${Boolean(p.enviado == 'Si')}`) Enviar
+              button.uk-margin-remove.uk-button.uk-button-secondary.uk-button-small.uk-margin-top(onclick=`sendOrder('${p.id}')`) Enviar
       else 
         tr 
           td No hay pedidos
