@@ -14,9 +14,7 @@ router.post('/:pedidoId', async (req, res) => {
   try {
     await pedidoModel.updateEnviarPedido(pedidoId, true)
 
-    // TWILIO VA AQUI
-    // "+525540774320"
-    smsSender.send("+525540774320")
+    smsSender.sendWhatsapp()
     res.sendStatus(202)
   } catch (e) {
     res.status(500).send(e)
