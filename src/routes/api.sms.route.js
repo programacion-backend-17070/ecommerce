@@ -16,7 +16,7 @@ router.post('/:pedidoId', async (req, res) => {
 
     // TWILIO VA AQUI
     // "+525540774320"
-    smsSender.send("+525540774320")
+    // smsSender.send("+525540774320")
     res.sendStatus(202)
   } catch (e) {
     res.status(500).send(e)

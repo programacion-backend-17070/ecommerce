@@ -33,15 +33,16 @@ async function removeFromCart(cartId, productId) {
   el.parentElement.removeChild(el)
 }
 
-async function sendOrder(pedidoId) {
-  const res = await fetch(`/api/sms/${pedidoId}`, { method: 'POST' })
+function sendOrder(pedidoId) {
+  fetch(`/api/sms/${pedidoId}`, { method: 'POST' })
+  .then(res => {
+    if (res.status != 202) {
+      return
+    }
 
-  if (res.status != 200) {
-    return
-  }
+    const row = document.getElementById(pedidoId)
 
-  const row = document.getElementById(pedidoId)
-  const cell = row.children.item(3)
-
-  cell.innerHTML = 'Si'
+    const cell = row.children.item(3)
+    cell.innerHTML = 'Si'
+  })
 }
