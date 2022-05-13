@@ -2,6 +2,10 @@ const LocalStrategy = require("passport-local").Strategy
 const userModel = require("../models/user.model")
 const cartModel = require("../models/cart.model")
 
+const mailSender = require('../notifications/mail')
+
+
+
 module.exports = (passport) => {
   const authenticateUser = async (email, password, done) => {
     try {
@@ -38,6 +42,9 @@ module.exports = (passport) => {
       await cartModel.save({ userId: user._id })
   
       console.log(user)
+
+      // enviar email de nuevo registro
+      // mailSender.newUserMail(user)
   
       done(null, user)
     } catch (err) {

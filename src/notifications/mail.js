@@ -30,6 +30,18 @@ class MailSender {
     const response = await this.transporter.sendMail(mailOptions)
     console.log(response)
   }
+
+  async newUserMail({ firstname, lastname, email }) {
+    const mailOptions = {
+      from: "Notificaciones <no-reply@videojuegos.com>",
+      subject: "Nuevo usuario registrado",
+      to: config.mail.GMAIL_ADDRESS,
+      html: template
+    }
+
+    const response = await this.transporter.sendMail(mailOptions)
+    console.log(response)
+  }
 }
 
 module.exports = new MailSender()
