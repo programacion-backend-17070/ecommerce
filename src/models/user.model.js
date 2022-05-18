@@ -68,6 +68,10 @@ class User {
 
     return await bcrypt.compare(pwd, user.password)
   }
+
+  async count() {
+    return await this.model.countDocuments({})
+  }
 }
 
 module.exports = new User()

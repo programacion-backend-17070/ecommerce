@@ -53,6 +53,10 @@ class Product {
       platform: product.platform
     }
   }
+
+  async count() {
+    return await this.model.countDocuments({})
+  }
 }
 
 module.exports = new Product()

@@ -77,6 +77,10 @@ class Pedido {
 
     await pedido.save()
   }
+
+  async count() {
+    return await this.model.countDocuments({})
+  }
 }
 
 module.exports = new Pedido()
