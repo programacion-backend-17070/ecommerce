@@ -9,6 +9,8 @@ class Product {
     })
 
     this.model = model("cart", schema)
+
+    this.valor = 10
   }
 
   async getAll() {

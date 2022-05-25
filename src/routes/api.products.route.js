@@ -8,6 +8,8 @@ router.get('/:id', async (req, res) => {
   if (!req.params.id) {
     return res.sendStatus(404)
   }
+
+  productModel.valor = 20
    
   res.send(await productModel.getById(req.params.id))
 })
