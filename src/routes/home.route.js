@@ -13,10 +13,10 @@ router.get("/", auth, async (req, res) => {
 
   const { id } = req.user
 
-  const products = await productModel.getAll();
+  // const products = await productModel.getAll();
   const cart = await cartModel.getByUser(id);
 
-  res.render("index", { products, cartId: cart.id })
+  res.render("index", { cartId: cart.id })
 })
 
 router.get("/carrito", auth, async (req, res) => {

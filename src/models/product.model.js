@@ -1,4 +1,3 @@
-
 const { Schema, model, Types } = require("mongoose")
 
 class Product {
@@ -8,22 +7,22 @@ class Product {
       platform: String,
       price: Number,
       description: String,
-      image: String
+      img: String
     })
 
     this.model = model("product", schema)
   }
 
   async getAll() {
-    const data = await this.model.find({})
-      .lean()
-    
+    const data = await this.model.find({}).lean()
+
     return data.map((product) => ({
       id: product._id,
       name: product.name,
       price: product.price,
       description: product.description,
-      platform: product.platform
+      platform: product.platform,
+      img: product.img,
     }))
   }
 
@@ -34,28 +33,30 @@ class Product {
       name: product.name,
       price: product.price,
       description: product.description,
-      platform: product.platform
+      platform: product.platform,
+      img: product.img,
     }
   }
 
 
   async delete(id) {
-    return await this.model.deleteOne({ _id: Types.ObjectId(id) })
+    return this.model.deleteOne({ _id: Types.ObjectId(id) })
   }
 
   async getById(id) {
-    const product =  await this.model.findById(Types.ObjectId(id)).lean()
+    const product = await this.model.findById(Types.ObjectId(id)).lean()
     return {
       id: product._id,
       name: product.name,
       price: product.price,
       description: product.description,
-      platform: product.platform
+      platform: product.platform,
+      img: product.img,
     }
   }
 
   async count() {
-    return await this.model.countDocuments({})
+    return this.model.countDocuments({})
   }
 }
 
