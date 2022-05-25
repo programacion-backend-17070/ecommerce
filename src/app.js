@@ -12,7 +12,7 @@ module.exports = (async () => {
   const templateEngine = require('./engine')
   const { mongoConfig } = require("./config")
   const initializePassport = require("./passport/local")
-  
+
   const homeRouter = require("./routes/home.route")
   const loginRouter = require("./routes/login.route")
   const adminRouter = require("./routes/admin.route")
