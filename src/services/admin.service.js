@@ -9,18 +9,16 @@ module.exports = {
 
     // transformacion de datos
     return users.map((u) => ({
+      // eslint-disable-next-line no-underscore-dangle
       id: u._id.toString(),
       name: `${u.firstname} ${u.lastname}`,
       email: u.email,
-      phone: u.phone
+      phone: u.phone,
     }))
   },
-  getStats: async () => {
-    // integracion con la capa de persistencia
-    return {
-      numPedidos: await pedidoModel.count(),
-      numUsers: await userModel.count(),
-      numProducts: await productModel.count(),
-    }
-  }
+  getStats: async () => ({
+    numPedidos: await pedidoModel.count(),
+    numUsers: await userModel.count(),
+    numProducts: await productModel.count(),
+  }),
 }

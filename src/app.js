@@ -1,5 +1,6 @@
+const express = require('express')
+
 module.exports = (async () => {
-  const express = require('express');
   const path = require('path')
   const http = require('http')
   const mongoose = require("mongoose")
