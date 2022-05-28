@@ -1,5 +1,5 @@
 function getProducts() {
-  return fetch("http://localhost:8080/api/products")
+  return fetch("/api/products")
     .then(r => r.json())
 }
 
