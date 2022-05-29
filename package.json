@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Proyecto de ecommerce",
   "main": "src/app.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start": "node .",
     "dev": "nodemon --ignore './public/*' -r dotenv/config .",

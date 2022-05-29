@@ -5,6 +5,7 @@
   "rules": {
     "prettier/prettier": ["error", { "semi": false, "singleQuote": true }],
     "no-unused-vars": "warn",
+    "no-underscore-dangle": 0,
     "no-console": "off",
     "func-names": "off",
     "no-process-exit": "off",

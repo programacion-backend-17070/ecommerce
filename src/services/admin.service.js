@@ -1,4 +1,4 @@
-const userModel = require('../models/user.model')
+const userModel = require('../models/user')
 const pedidoModel = require('../models/pedido.model')
 const productModel = require('../models/product.model')
 

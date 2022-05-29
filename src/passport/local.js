@@ -1,5 +1,5 @@
 const LocalStrategy = require("passport-local").Strategy
-const userModel = require("../models/user.model")
+const userModel = require("../models/user")
 const cartModel = require("../models/cart.model")
 
 const mailSender = require('../notifications/mail')

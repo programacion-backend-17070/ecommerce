@@ -1,4 +1,3 @@
-
 const { Schema, model, Types } = require("mongoose")
 
 class Product {
@@ -73,7 +72,7 @@ class Product {
   }
 
   async removeProduct(id, productId) {
-    const cart =  await this.model.findById(Types.ObjectId(id))
+    const cart = await this.model.findById(Types.ObjectId(id))
     if (!cart.products.includes(productId)) {
       return
     }
