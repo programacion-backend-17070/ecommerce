@@ -1,24 +1,23 @@
-const { Schema, model, Types } = require("mongoose")
+const { Schema, Types } = require("mongoose")
 const bcrypt = require("bcrypt")
-const UserDTO = require("./user/UserDTO")
+const BaseModel = require('./base.model')
 
-class User {
+class User extends BaseModel {
   constructor() {
     const schema = new Schema({
       email: String,
       firstname: String,
       lastname: String,
       phone: String,
-      password: String
+      password: String,
+      // age
     })
 
-    this.model = model("user", schema)
+    super(schema, 'user')
   }
 
-  // READ
-  async getAll() {
-    const data = await this.model.find({}).lean()
-    return data.map((user) => new UserDTO(user._id, user.firstname, user.lastname, user.email, user.phone))
+  getAll() {
+    return []
   }
 
   // CREATE
@@ -53,7 +52,7 @@ class User {
 
   // DELETE
   async delete(id) {
-    return await this.model.deleteOne({ _id: Types.ObjectId(id) })
+    return this.model.deleteOne({ _id: Types.ObjectId(id) })
   }
 
   // READ BY ID
@@ -72,10 +71,6 @@ class User {
     const user = await this.model.findOne({ email })
 
     return await bcrypt.compare(pwd, user.password)
-  }
-
-  async count() {
-    return await this.model.countDocuments({})
   }
 }
 
