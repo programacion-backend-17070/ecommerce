@@ -1,10 +1,19 @@
-const { Router } = require('express');
-const userModel = require('../models/user.model')
+const { Router } = require('express')
+// const userModel = require('../models/user.model')
 const cartModel = require('../models/cart.model')
+const ModelFactory = require('../models/model.factory')
 
-const router = new Router();
+const userModel = ModelFactory.getModel('user')
 
-router.get('/', async (req, res) => res.send(await userModel.getAll()))
+const router = new Router()
+
+router.get('/', async (req, res) => {
+  console.log(userModel)
+  const users = await userModel.getAll()
+  // TODO: agregar pedidos a usuario
+  console.log(users)
+  res.send(users)
+})
 
 router.get('/current', async (req, res) => {
   if (!req.session) {
@@ -36,8 +45,19 @@ router.get('/:id', async (req, res) => {
   })
 })
 
+router.post('/', async (req, res) => {
+  const { body } = req // { email: alguien@example.com }
 
+  /// capa de negocio
+  // recibimos la info de la vista
+  // utilizamos un DTO (la informacion)
+  // nos comunicamos con el DAO
+  // ejecutamos el metodo de creacion
+  // el dao guarda la informacion en la DB
 
+  await userModel.save(body)
 
+  return res.sendStatus(201)
+})
 
 module.exports = router

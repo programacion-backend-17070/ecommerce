@@ -1,5 +1,6 @@
 const { Schema, model, Types } = require("mongoose")
 const bcrypt = require("bcrypt")
+const UserDTO = require("./user/UserDTO")
 
 class User {
   constructor() {
@@ -14,11 +15,13 @@ class User {
     this.model = model("user", schema)
   }
 
+  // READ
   async getAll() {
     const data = await this.model.find({}).lean()
-    return data
+    return data.map((user) => new UserDTO(user._id, user.firstname, user.lastname, user.email, user.phone))
   }
 
+  // CREATE
   async save(obj) {
     obj.password = await bcrypt.hash(obj.password, 10)
     const user = await this.model.create(obj)
@@ -48,10 +51,12 @@ class User {
     }
   }
 
+  // DELETE
   async delete(id) {
     return await this.model.deleteOne({ _id: Types.ObjectId(id) })
   }
 
+  // READ BY ID
   async getById(id) {
     const user =  await this.model.findById(Types.ObjectId(id))
     return {

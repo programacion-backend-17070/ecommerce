@@ -70,6 +70,22 @@ class Pedido {
     }
   }
 
+  async getAllByUser(id) {
+    const pedidos = await this.model.find({ userId: id }).lean()
+
+    if (!pedidos) {
+      return []
+    }
+
+    return pedidos.map((pedido) => ({
+      id: pedido._id.toString(),
+      userId: pedido.userId,
+      total: pedido.total,
+      created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
+      enviado: pedido.enviado ? 'Si' : 'No',
+    }))
+  }
+
   async updateEnviarPedido(id, enviado) {
     const pedido =  await this.model.findById(id)
 
