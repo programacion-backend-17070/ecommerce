@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const http = require('http')
 const mongoose = require('mongoose')
@@ -35,6 +36,28 @@ module.exports = (async () => {
 
     templateEngine(app)
 
+    // agregamos cors
+    const allowedHosts = ['http://localhost:3000', 'http://localhost:8081']
+    const corsCallback = (req, cb) => {
+      const options = { origin: false }
+
+      console.log(req.headers, req.path)
+
+      const isAllowedHost = allowedHosts.includes(req.header('Origin'))
+      const isUserPath = req.path.includes('api/products')
+      if (isAllowedHost && isUserPath) {
+        options.origin = true
+      }
+
+      cb(null, options)
+    }
+    // const corsOptions = {
+    //   origin: 'http://example.com',
+    //   optionSuccessStatus: 200,
+    //   methods: 'GET,POST',
+    // }
+
+    app.use(cors(corsCallback))
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
     app.use(flash())

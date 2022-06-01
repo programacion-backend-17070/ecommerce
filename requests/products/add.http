@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/products
+
+{
+  "name": "Metal Gear Solid",
+  "platform": "PS4",
+  "price": "5000",
+  "description": "War"
+}

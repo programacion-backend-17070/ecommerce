@@ -7,9 +7,8 @@ function App() {
   const getProducts = () => {
     console.log('getProducts')
     // return [{ name: 1 }]
-    axios.get("http://localhost:8080/api/products")
+    axios.get("http://localhost:8080/api/user")
       .then(({ data }) => setProducts(data))
-    
   }
 
   useEffect(getProducts, [])

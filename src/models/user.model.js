@@ -16,10 +16,6 @@ class User extends BaseModel {
     super(schema, 'user')
   }
 
-  getAll() {
-    return []
-  }
-
   // CREATE
   async save(newUser) {
     const obj = newUser
