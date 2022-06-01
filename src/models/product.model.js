@@ -44,6 +44,9 @@ class Product {
 
   async getById(id) {
     const product = await this.model.findById(Types.ObjectId(id)).lean()
+    if (!product) {
+      return null
+    }
     return {
       id: product._id,
       name: product.name,

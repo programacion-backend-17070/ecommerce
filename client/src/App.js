@@ -7,7 +7,7 @@ function App() {
   const getProducts = () => {
     console.log('getProducts')
     // return [{ name: 1 }]
-    axios.get("http://localhost:8080/api/products")
+    axios.get("http://localhost:8080/api/user")
       .then(({ data }) => setProducts(data))
     
   }
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App uk-container">
-      {products.map((c, id)=> <p key={id}>{c.name}</p>)}
+      {products.map((c, id)=> <p key={id}>{c.firstname}</p>)}
     </div>
   );
 }

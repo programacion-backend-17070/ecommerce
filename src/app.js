@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const http = require('http')
 const mongoose = require('mongoose')
@@ -34,6 +35,24 @@ module.exports = (async () => {
     initializePassport(passport)
 
     templateEngine(app)
+
+    // configurar CORS
+    const corsCallback = (req, cb) => {
+      const url = req.path
+      const origin = req.header('Origin')
+
+      console.log(url, origin)
+
+      const allowedHosts = ['http://localhost:3000', 'http://localhost:8081']
+      const allowedRoutes = ['/api/products']
+
+      if (allowedHosts.includes(origin) && allowedRoutes.includes(url)) {
+        cb(null, { origin: true })
+      } else {
+        cb(null, { origin: false })
+      }
+    }
+    app.use(cors(corsCallback))
 
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
