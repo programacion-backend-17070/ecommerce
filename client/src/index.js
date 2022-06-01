@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import '../node_modules/uikit/dist/css/uikit.css'
+import '../node_modules/uikit/dist/js/uikit.js'
 import App from './App';
 import Home from './views/Home';
 import reportWebVitals from './reportWebVitals';
@@ -9,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Home />
   </React.StrictMode>
 );
 

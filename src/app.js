@@ -44,9 +44,9 @@ module.exports = (async () => {
       console.log(url, origin)
 
       const allowedHosts = ['http://localhost:3000', 'http://localhost:8081']
-      const allowedRoutes = ['/api/products']
+      // const allowedRoutes = ['/api/products']
 
-      if (allowedHosts.includes(origin) && allowedRoutes.includes(url)) {
+      if (allowedHosts.includes(origin)) {
         cb(null, { origin: true })
       } else {
         cb(null, { origin: false })
