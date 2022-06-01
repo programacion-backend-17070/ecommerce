@@ -1,26 +1,23 @@
-
-const { Schema, model, Types } = require("mongoose")
+const { Schema, model, Types } = require('mongoose')
 
 class Product {
   constructor() {
     const schema = new Schema({
       userId: String,
-      products: { type: [String], default: [] }
+      products: { type: [String], default: [] },
     })
 
-    this.model = model("cart", schema)
+    this.model = model('cart', schema)
 
     this.valor = 10
   }
 
   async getAll() {
-    const data = await this.model.find({})
-      .lean()
-    
+    const data = await this.model.find({}).lean()
     return data.map((cart) => ({
       id: cart._id.toString(),
       userId: cart.userId,
-      products: cart.products
+      products: cart.products,
     }))
   }
 
@@ -29,27 +26,25 @@ class Product {
     return {
       id: cart._id.toString(),
       userId: cart.userId,
-      products: cart.products
+      products: cart.products,
     }
   }
 
-
   async delete(id) {
-    return await this.model.deleteOne({ _id: Types.ObjectId(id) })
+    return this.model.deleteOne({ _id: Types.ObjectId(id) })
   }
 
   async getById(id) {
-    const cart =  await this.model.findById(Types.ObjectId(id)).lean()
+    const cart = await this.model.findById(Types.ObjectId(id)).lean()
     return {
       id: cart._id.toString(),
       userId: cart.userId,
-      products: cart.products
+      products: cart.products,
     }
   }
 
   async getByUser(id) {
-    const cart =  await this.model.findOne({ userId: id }).lean()
-    
+    const cart = await this.model.findOne({ userId: id }).lean()
     if (!cart) {
       return {}
     }
@@ -57,12 +52,12 @@ class Product {
     return {
       id: cart._id.toString(),
       userId: cart.userId,
-      products: cart.products
+      products: cart.products,
     }
   }
 
   async addProduct(id, productId) {
-    const cart =  await this.model.findById(Types.ObjectId(id))
+    const cart = await this.model.findById(Types.ObjectId(id))
     if (cart.products.includes(productId)) {
       return
     }
@@ -73,18 +68,18 @@ class Product {
   }
 
   async removeProduct(id, productId) {
-    const cart =  await this.model.findById(Types.ObjectId(id))
+    const cart = await this.model.findById(Types.ObjectId(id))
     if (!cart.products.includes(productId)) {
       return
     }
 
-    cart.products = cart.products.filter(pId => pId != productId)
+    cart.products = cart.products.filter((pId) => pId !== productId)
 
     await cart.save()
   }
 
   async emptyCartByUser(userId) {
-    const cart =  await this.model.findOne({ userId })
+    const cart = await this.model.findOne({ userId })
 
     cart.products = []
 

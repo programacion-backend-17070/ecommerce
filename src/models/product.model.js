@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require("mongoose")
+const { Schema, model, Types } = require('mongoose')
 
 class Product {
   constructor() {
@@ -7,10 +7,10 @@ class Product {
       platform: String,
       price: Number,
       description: String,
-      img: String
+      img: String,
     })
 
-    this.model = model("product", schema)
+    this.model = model('product', schema)
   }
 
   async getAll() {
@@ -37,7 +37,6 @@ class Product {
       img: product.img,
     }
   }
-
 
   async delete(id) {
     return this.model.deleteOne({ _id: Types.ObjectId(id) })

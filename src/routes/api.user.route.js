@@ -24,9 +24,9 @@ router.get('/current', async (req, res) => {
   const user = await userModel.getById(userId)
   const cart = await cartModel.getByUser(userId)
 
-  res.send({
+  return res.send({
     ...user,
-    cartId: cart.id
+    cartId: cart.id,
   })
 })
 
@@ -37,11 +37,11 @@ router.get('/:id', async (req, res) => {
   }
 
   const user = await userModel.getById(userId)
-  const cart = await cartModel.getByUser(userId).
+  const cart = await cartModel.getByUser(userId)
 
-  res.send({
+  return res.send({
     ...user,
-    cartId: cart.id
+    cartId: cart.id,
   })
 })
 

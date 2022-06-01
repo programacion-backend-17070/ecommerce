@@ -1,5 +1,5 @@
-const { Schema, Types } = require("mongoose")
-const bcrypt = require("bcrypt")
+const { Schema, Types } = require('mongoose')
+const bcrypt = require('bcrypt')
 const BaseModel = require('./base.model')
 
 class User extends BaseModel {
@@ -21,16 +21,17 @@ class User extends BaseModel {
   }
 
   // CREATE
-  async save(obj) {
-    obj.password = await bcrypt.hash(obj.password, 10)
+  async save(newUser) {
+    const obj = newUser
+    obj.password = await bcrypt.hash(newUser.password, 10)
     const user = await this.model.create(obj)
-    
+
     return {
       id: user._id,
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
-      phone: user.phone
+      phone: user.phone,
     }
   }
 
@@ -46,7 +47,7 @@ class User extends BaseModel {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
-      phone: user.phone
+      phone: user.phone,
     }
   }
 
@@ -57,20 +58,20 @@ class User extends BaseModel {
 
   // READ BY ID
   async getById(id) {
-    const user =  await this.model.findById(Types.ObjectId(id))
+    const user = await this.model.findById(Types.ObjectId(id))
     return {
       id: user._id,
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
-      phone: user.phone
+      phone: user.phone,
     }
   }
 
   async isPasswordValid(email, pwd) {
     const user = await this.model.findOne({ email })
 
-    return await bcrypt.compare(pwd, user.password)
+    return bcrypt.compare(pwd, user.password)
   }
 }
 

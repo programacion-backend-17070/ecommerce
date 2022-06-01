@@ -3,7 +3,6 @@ const pedidoModel = require('../models/pedido.model')
 
 const adminService = require('../services/admin.service')
 
-
 module.exports = {
   main: async (req, res) => {
     // solicitar a la capa de servicios las estadisticas
@@ -11,7 +10,7 @@ module.exports = {
     const stats = await adminService.getStats()
     console.log(stats)
 
-    res.render("admin/index", { ...stats })
+    res.render('admin/index', { ...stats })
   },
   getUsers: async (req, res) => {
     // Escribir la logica de negocio
@@ -25,22 +24,25 @@ module.exports = {
   },
   getProducts: async (req, res) => {
     const products = await productModel.getAll()
-    res.render("admin/table", { title: "Productos", add: "/admin/add/product", products } )
+    res.render('admin/table', {
+      title: 'Productos',
+      add: '/admin/add/product',
+      products,
+    })
   },
   getPedidos: async (req, res) => {
-
     const pedidos = await pedidoModel.getAll()
-    res.render("admin/pedidosTable", { title: "Pedidos", pedidos } )
+    res.render('admin/pedidosTable', { title: 'Pedidos', pedidos })
   },
-  addProduct: (req, res) => res.render("admin/productAdd"),
+  addProduct: (req, res) => res.render('admin/productAdd'),
   createProduct: async (req, res) => {
     const { body } = req
     try {
       await productModel.save(body)
-      res.render("admin/success")
-    } catch(error) {
-      res.render("admin/error", { error })
+      res.render('admin/success')
+    } catch (error) {
+      res.render('admin/error', { error })
     }
   },
-  addUser: (req, res) => res.render("admin/userAdd")
+  addUser: (req, res) => res.render('admin/userAdd'),
 }

@@ -8,6 +8,9 @@
     "dev": "nodemon --ignore './public/*' -r dotenv/config .",
     "lint": "eslint src/**/*.js"
   },
+  "engines": {
+    "node": ">=8.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/programacion-backend-17070/ecommerce.git"

@@ -1,7 +1,7 @@
-const { Router } = require('express');
+const { Router } = require('express')
 const productModel = require('../models/product.model')
 
-const router = new Router();
+const router = new Router()
 
 router.get('/', async (req, res) => res.send(await productModel.getAll()))
 router.get('/:id', async (req, res) => {
@@ -10,8 +10,8 @@ router.get('/:id', async (req, res) => {
   }
 
   productModel.valor = 20
-   
-  res.send(await productModel.getById(req.params.id))
+
+  return res.send(await productModel.getById(req.params.id))
 })
 
 module.exports = router
