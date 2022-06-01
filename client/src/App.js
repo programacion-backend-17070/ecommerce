@@ -15,7 +15,7 @@ function App() {
   useEffect(getProducts, [])
 
   return (
-    <div className="App">
+    <div className="App uk-container">
       {products.map((c, id)=> <p key={id}>{c.name}</p>)}
     </div>
   );
