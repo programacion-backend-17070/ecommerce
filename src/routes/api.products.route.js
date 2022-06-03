@@ -1,9 +1,13 @@
 const { Router } = require('express')
 const productModel = require('../models/product.model')
 
+const authJwt = require('../middlewares/jwt.middleware')
+
 const router = new Router()
 
-router.get('/', async (req, res) => res.send(await productModel.getAll()))
+router.get('/', authJwt, async (req, res) =>
+  res.send(await productModel.getAll())
+)
 router.get('/:id', async (req, res) => {
   if (!req.params.id) {
     return res.sendStatus(404)

@@ -12,8 +12,9 @@ class User extends BaseModel {
       password: String,
       // age
     })
-
     super(schema, 'user')
+
+    this.id = 1
   }
 
   getAll() {
