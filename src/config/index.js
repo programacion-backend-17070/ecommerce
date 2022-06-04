@@ -1,12 +1,5 @@
 module.exports = {
-  mongoConfig: {
-    HOSTNAME: 'cluster0.go6w7.mongodb.net',
-    SCHEMA: 'mongodb+srv',
-    USER: 'app',
-    PASSWORD: process.env.MONGO_PASSWORD,
-    DATABASE: 'chat',
-    OPTIONS: 'retryWrites=true&w=majority',
-  },
+  MONGO_URI: process.env.MONGO_URI,
   redisConfig: {
     PASSWORD: process.env.REDIS_PASSWORD,
   },
