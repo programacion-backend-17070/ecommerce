@@ -1,46 +1,14 @@
-const { Schema, model, Types } = require('mongoose')
+const { Schema, Types } = require('mongoose')
+const BaseModel = require('./base.model')
 
-class Product {
+class CartModel extends BaseModel {
   constructor() {
     const schema = new Schema({
       userId: String,
       products: { type: [String], default: [] },
     })
 
-    this.model = model('cart', schema)
-
-    this.valor = 10
-  }
-
-  async getAll() {
-    const data = await this.model.find({}).lean()
-    return data.map((cart) => ({
-      id: cart._id.toString(),
-      userId: cart.userId,
-      products: cart.products,
-    }))
-  }
-
-  async save(obj) {
-    const cart = await this.model.create(obj)
-    return {
-      id: cart._id.toString(),
-      userId: cart.userId,
-      products: cart.products,
-    }
-  }
-
-  async delete(id) {
-    return this.model.deleteOne({ _id: Types.ObjectId(id) })
-  }
-
-  async getById(id) {
-    const cart = await this.model.findById(Types.ObjectId(id)).lean()
-    return {
-      id: cart._id.toString(),
-      userId: cart.userId,
-      products: cart.products,
-    }
+    super(schema, 'cart')
   }
 
   async getByUser(id) {
@@ -49,11 +17,7 @@ class Product {
       return {}
     }
 
-    return {
-      id: cart._id.toString(),
-      userId: cart.userId,
-      products: cart.products,
-    }
+    return this.toObj(cart)
   }
 
   async addProduct(id, productId) {
@@ -87,4 +51,4 @@ class Product {
   }
 }
 
-module.exports = new Product()
+module.exports = new CartModel()

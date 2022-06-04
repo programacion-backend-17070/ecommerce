@@ -1,7 +1,8 @@
-const { Schema, model, Types } = require('mongoose')
+const { Schema } = require('mongoose')
 const moment = require('moment')
+const BaseModel = require('./base.model')
 
-class Pedido {
+class Pedido extends BaseModel {
   constructor() {
     const schema = new Schema({
       userId: String,
@@ -10,42 +11,37 @@ class Pedido {
       enviado: Boolean,
     })
 
-    this.model = model('pedido', schema)
+    super(schema, 'pedido')
   }
 
   async getAll() {
     const data = await this.model.find({}).lean()
 
     return data.map((pedido) => ({
-      id: pedido._id.toString(),
-      userId: pedido.userId,
-      total: pedido.total,
+      ...this.toObj(pedido),
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
       enviado: pedido.enviado ? 'Si' : 'No',
     }))
   }
 
   async save(obj) {
-    const pedido = await this.model.create(obj)
+    const pedido = await super.save(obj)
     return {
-      id: pedido._id.toString(),
-      userId: pedido.userId,
-      total: pedido.total,
+      ...pedido,
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
       enviado: pedido.enviado ? 'Si' : 'No',
     }
   }
 
-  async delete(id) {
-    return this.model.deleteOne({ _id: Types.ObjectId(id) })
-  }
-
   async getById(id) {
-    const pedido = await this.model.findById(Types.ObjectId(id)).lean()
+    const pedido = await super.getById(id)
+
+    if (!pedido) {
+      return null
+    }
+
     return {
-      id: pedido._id.toString(),
-      userId: pedido.userId,
-      total: pedido.total,
+      ...pedido,
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
       enviado: pedido.enviado ? 'Si' : 'No',
     }
@@ -55,13 +51,11 @@ class Pedido {
     const pedido = await this.model.findOne({ userId: id }).lean()
 
     if (!pedido) {
-      return {}
+      return null
     }
 
     return {
-      id: pedido._id.toString(),
-      userId: pedido.userId,
-      total: pedido.total,
+      ...this.toObj(pedido),
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
       enviado: pedido.enviado ? 'Si' : 'No',
     }
@@ -75,9 +69,7 @@ class Pedido {
     }
 
     return pedidos.map((pedido) => ({
-      id: pedido._id.toString(),
-      userId: pedido.userId,
-      total: pedido.total,
+      ...this.toObj(pedido),
       created: moment(pedido.created).format('DD-MM-YYYY HH:mm'),
       enviado: pedido.enviado ? 'Si' : 'No',
     }))
@@ -89,10 +81,6 @@ class Pedido {
     pedido.enviado = enviado
 
     await pedido.save()
-  }
-
-  async count() {
-    return this.model.countDocuments({})
   }
 }
 

@@ -1,4 +1,4 @@
-const { Schema, Types } = require('mongoose')
+const { Schema } = require('mongoose')
 const bcrypt = require('bcrypt')
 const BaseModel = require('./base.model')
 
@@ -12,28 +12,14 @@ class User extends BaseModel {
       password: String,
       // age
     })
-    super(schema, 'user')
-
-    this.id = 1
+    const skipFields = ['password']
+    super(schema, 'user', skipFields)
   }
 
-  getAll() {
-    return []
-  }
-
-  // CREATE
   async save(newUser) {
     const obj = newUser
     obj.password = await bcrypt.hash(newUser.password, 10)
-    const user = await this.model.create(obj)
-
-    return {
-      id: user._id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      phone: user.phone,
-    }
+    return super.save(obj)
   }
 
   existsByEmail(email) {
@@ -42,31 +28,10 @@ class User extends BaseModel {
 
   async getByEmail(email) {
     const user = await this.model.findOne({ email })
-
-    return {
-      id: user._id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      phone: user.phone,
+    if (!user) {
+      return null
     }
-  }
-
-  // DELETE
-  async delete(id) {
-    return this.model.deleteOne({ _id: Types.ObjectId(id) })
-  }
-
-  // READ BY ID
-  async getById(id) {
-    const user = await this.model.findById(Types.ObjectId(id))
-    return {
-      id: user._id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      phone: user.phone,
-    }
+    return this.toObj(user)
   }
 
   async isPasswordValid(email, pwd) {
