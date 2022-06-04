@@ -10,7 +10,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 
 const templateEngine = require('./engine')
-const { mongoConfig } = require('./config')
+const { MONGO_URI } = require('./config')
 const initializePassport = require('./passport/local')
 
 const homeRouter = require('./routes/home.route')
@@ -22,12 +22,10 @@ const apiUserRouter = require('./routes/api.user.route')
 const apiSmsRouter = require('./routes/api.sms.route')
 
 module.exports = (async () => {
-  const { HOSTNAME, SCHEMA, DATABASE, USER, PASSWORD, OPTIONS } = mongoConfig
   const app = express()
   const server = http.createServer(app)
 
   const PORT = process.env.PORT || 8080
-  const MONGO_URI = `${SCHEMA}://${USER}:${PASSWORD}@${HOSTNAME}/${DATABASE}?${OPTIONS}`
   console.log(MONGO_URI)
   try {
     await mongoose.connect(MONGO_URI)
@@ -38,13 +36,8 @@ module.exports = (async () => {
 
     // configurar CORS
     const corsCallback = (req, cb) => {
-      const url = req.path
       const origin = req.header('Origin')
-
-      console.log(url, origin)
-
       const allowedHosts = ['http://localhost:3000', 'http://localhost:8081']
-      // const allowedRoutes = ['/api/products']
 
       if (allowedHosts.includes(origin)) {
         cb(null, { origin: true })
