@@ -4,13 +4,12 @@ const controller = require('../controllers/admin.controller')
 
 const router = Router()
 
-router.use(auth)
-router.get('/', controller.main)
-router.get('/users', controller.getUsers)
-router.get('/products', controller.getProducts)
-router.get('/pedidos', controller.getPedidos)
-router.get('/add/product', controller.addProduct)
-router.post('/add/product', controller.createProduct)
-router.get('/add/user', controller.addUser)
-
 module.exports = router
+  .use(auth)
+  .get('/', controller.main)
+  .get('/users', controller.getUsers)
+  .get('/products', controller.getProducts)
+  .get('/pedidos', controller.getPedidos)
+  .get('/add/product', controller.addProduct)
+  .post('/add/product', controller.createProduct)
+  .get('/add/user', controller.addUser)
