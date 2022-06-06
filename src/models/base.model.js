@@ -38,13 +38,13 @@ class BaseModel {
   }
 
   async save(item) {
-    // TODO: return only properties in schema, do not return create command response
-    return this.toObj(await this.model.create(item))
+    const databaseData = await this.model.create(item)
+    return this.toObj(JSON.parse(JSON.stringify(databaseData)))
   }
 
   toObj(item) {
     const omit = this.skipFields.concat(['_id', '__v'])
-    return _.omit({ ...item.toJson(), id: item._id }, omit)
+    return _.omit({ ...item, id: item._id }, omit)
   }
 }
 
