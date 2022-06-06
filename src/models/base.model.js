@@ -38,8 +38,8 @@ class BaseModel {
   }
 
   async save(item) {
-    // TODO: return only properties in schema, do not return create command response
-    return this.toObj(await this.model.create(item))
+    const databaseData = await this.model.create(item)
+    return this.toObj(JSON.parse(JSON.stringify(databaseData)))
   }
 
   toObj(item) {
