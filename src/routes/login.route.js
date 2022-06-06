@@ -21,17 +21,19 @@ router.post(
 router.post(
   '/login',
   passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/register',
     failureFlash: true,
   }),
-  (req, res) => {
-    console.log(req.user)
+  // (req, res) => {
+  //   console.log(req.user)
 
-    const token = generateToken(req.user)
-    res.clearCookie('token')
-    res.cookie('token', token)
+  //   const token = generateToken(req.user)
+  //   res.clearCookie('token')
+  //   res.cookie('token', token)
 
-    res.status(200).send(token)
-  }
+  //   res.status(200).send(token)
+  // }
 )
 router.get('/logout', auth, (req, res) => {
   const { firstname, lastname } = req.user

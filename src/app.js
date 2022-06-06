@@ -37,7 +37,7 @@ module.exports = (async () => {
     // configurar CORS
     const corsCallback = (req, cb) => {
       const origin = req.header('Origin')
-      const allowedHosts = ['http://localhost:3000', 'http://localhost:8081']
+      const allowedHosts = ['http://localhost:3000', 'http://localhost:8080']
 
       if (allowedHosts.includes(origin)) {
         cb(null, { origin: true })
