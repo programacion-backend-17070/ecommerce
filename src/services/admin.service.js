@@ -8,13 +8,7 @@ module.exports = {
     const users = await userModel.getAll()
 
     // transformacion de datos
-    return users.map((u) => ({
-      // eslint-disable-next-line no-underscore-dangle
-      id: u._id.toString(),
-      name: `${u.firstname} ${u.lastname}`,
-      email: u.email,
-      phone: u.phone,
-    }))
+    return users
   },
   getStats: async () => ({
     numPedidos: await pedidoModel.count(),
