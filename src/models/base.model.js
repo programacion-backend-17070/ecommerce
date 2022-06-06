@@ -44,7 +44,7 @@ class BaseModel {
 
   toObj(item) {
     const omit = this.skipFields.concat(['_id', '__v'])
-    return _.omit({ ...item, id: item._id }, omit)
+    return _.omit({ ...item.toJson(), id: item._id }, omit)
   }
 }
 
