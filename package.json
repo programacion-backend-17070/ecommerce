@@ -6,10 +6,12 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon --ignore './public/*' --ignore './client/*' -r dotenv/config .",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js",
+    "test": "mocha './tests/**/*.test.js'",
+    "docker": "docker run --rm --name ecommerce-mongo -p 27017:27017 --volume local-ecommerce:/data/db -d mongo:4.4"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=14.0.0"
   },
   "repository": {
     "type": "git",
@@ -60,6 +62,7 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "supertest": "^6.2.3"
   }
 }
