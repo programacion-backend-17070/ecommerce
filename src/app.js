@@ -21,6 +21,8 @@ const apiCartRouter = require('./routes/api.cart.route')
 const apiUserRouter = require('./routes/api.user.route')
 const apiSmsRouter = require('./routes/api.sms.route')
 
+const swaggerMiddleware = require('./middlewares/swagger.middleware')
+
 module.exports = (async () => {
   const app = express()
   const server = http.createServer(app)
@@ -33,6 +35,7 @@ module.exports = (async () => {
     initializePassport(passport)
 
     templateEngine(app)
+    swaggerMiddleware(app)
 
     // configurar CORS
     const corsCallback = (req, cb) => {
