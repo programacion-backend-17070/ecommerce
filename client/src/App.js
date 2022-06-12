@@ -7,8 +7,21 @@ function App() {
   const getProducts = () => {
     console.log('getProducts')
     // return [{ name: 1 }]
-    axios.get("http://localhost:8080/api/user")
-      .then(({ data }) => setProducts(data))
+    axios.post("http://localhost:8080/graphql", {query: `
+      query {
+        getAllProducts {
+          id,
+          name
+      }
+    }
+    `}, {
+      headers: {
+        'Content-Type': 'application/json'
+      }})
+      .then(({ data }) => {
+        const products = data.data.getAllProducts
+        setProducts(products)
+      })
     
   }
 
@@ -16,7 +29,7 @@ function App() {
 
   return (
     <div className="App uk-container">
-      {products.map((c, id)=> <p key={id}>{c.firstname}</p>)}
+      {products.map((c, id)=> <p key={id}>{c.name}</p>)}
     </div>
   );
 }

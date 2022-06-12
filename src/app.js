@@ -22,6 +22,7 @@ const apiUserRouter = require('./routes/api.user.route')
 const apiSmsRouter = require('./routes/api.sms.route')
 
 const swaggerMiddleware = require('./middlewares/swagger.middleware')
+const graphql = require('./graphql')
 
 module.exports = (async () => {
   const app = express()
@@ -36,20 +37,23 @@ module.exports = (async () => {
 
     templateEngine(app)
     swaggerMiddleware(app)
+   
 
     // configurar CORS
     const corsCallback = (req, cb) => {
       const origin = req.header('Origin')
       const allowedHosts = ['http://localhost:3000', 'http://localhost:8080']
 
+      console.log(req.method, req.url)
+
       if (allowedHosts.includes(origin)) {
         cb(null, { origin: true })
       } else {
-        cb(null, { origin: false })
+        cb(null, { origin: true })
       }
     }
     app.use(cors(corsCallback))
-
+    graphql(app)
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
     app.use(flash())

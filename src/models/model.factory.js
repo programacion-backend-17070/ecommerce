@@ -1,5 +1,6 @@
 const userModel = require('./user.model')
 const pedidoModel = require('./pedido.model')
+const productModel = require('./product.model')
 
 // abstract factory
 class ModelFactory {
@@ -9,8 +10,8 @@ class ModelFactory {
         return userModel
       case 'pedido':
         return pedidoModel
-      case 'cart':
-        return pedidoModel
+      case 'product':
+        return productModel
       // un case por cada modelo
       default:
         throw new Error('modelo no existe')
